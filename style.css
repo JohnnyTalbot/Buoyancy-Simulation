@@ -1,0 +1,30 @@
+*{
+	margin: 0;
+}
+
+.controls{
+	height: 100px;
+}
+
+.ballInfo{
+	display: flex;
+	flex-direction: row;
+}
+
+.ballInfo div{
+	display: flex;
+	flex-direction: column;
+}
+
+.ballInfo div input{
+	width: 150px;
+}
+
+.fluidInfo{
+	display: flex;
+	flex-direction: column;
+}
+
+.fluidInfo input{
+	width: 150px;
+}

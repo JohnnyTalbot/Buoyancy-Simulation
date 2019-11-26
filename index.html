@@ -1,0 +1,50 @@
+<html lang=en>
+<head>
+	<meta charset=utf-8>
+    <title>Buoyancy Simulator</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+	integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+	crossorigin="anonymous"></script>
+	<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+    <body onload="init()">
+    	
+    	<div class="controls">
+
+    		<div class="ballInfo">
+	    		<div class="ballWeight">
+	    			<p>Ball Weight: </p>
+	    			<input type="range" min="1" max="200" value="50">
+	    		</div>
+	    		<div class="ballSize">
+	    			<p>Ball Size: </p>
+	    			<input type="range" min="1" max="10" value="2">
+	    		</div>
+	    	</div>
+	    	
+	    	<div class="fluidInfo">
+	    		<p>Fluid Density: </p>
+	    		<input type="range" min="1" max="100" value="50">
+	    	</div>
+
+	    	<div class="buttons">
+	    		<button class="drop">
+	    			DROP
+	    		</button>
+	    		<button class="reset">
+	    			RESET
+	    		</button>
+	    	</div>
+
+    	</div>
+    	
+    	
+
+    	<canvas></canvas>
+    	<script src="script.js"></script>
+
+    </body>
+</html>
