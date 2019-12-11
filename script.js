@@ -5,17 +5,21 @@ var fluid;
 var ball;
 var bWeight, bSize, fDensity;
 var vy;
+var buoy;
 
 var drop = false;
 
-var gravity = 0.5;  
-var bounce = 0.1; 
-//var xFriction = 0.1;
+//Accelaration as ball drops is affected by this variable
+var gravity = 0.5;
+
+//Bounce of the ball if the ball hits the floor
+var bounce = 0.1;
 
 function init(){
     setupCanvas();
     getValues();
 
+    buoy = 0
     vy = 0;
     fluid = {x:0, y:canvas.height/1.5, height:canvas.height-(canvas.height/1.5), width:canvas.width, density:fDensity, color:"blue"}
     ball = {x:canvas.width / 2, y:50, radius:bSize*10, weight:bWeight, color:"red"};
@@ -56,7 +60,7 @@ function buttons(){
   });
 };
 
-
+//Function that draws all objects on canvas
 function draw() {
    ctx.clearRect(0,0,canvas.width, canvas.height); 
 
@@ -78,34 +82,35 @@ function draw() {
 setInterval(draw, 1000/35); 
 
 
-
+//Function that updates all movement of ball
 function ballMovement(){
     getValues();
     buttons();
 
-    if (drop){
+    if (drop){//if drop is True, ball movement activates
       if ((ball.y+ball.radius) < fluid.y){
       ball.y += vy;
       vy += gravity;
       }
-      else{
-        //Ball reaches fluid
+      else{//Ball reaches fluid
 
         //Ball more dense than fluid
-        if(bWeight/bSize > fDensity){
+        if(bWeight/bSize >= fDensity){
           ball.y += vy;
-          vy /= bWeight/fDensity;
-          vy += bWeight/fDensity;
+          vy += gravity/fDensity
         }
         else{//Ball less dense than fluid
           ball.y += vy;
           vy /= ((fDensity)/(bWeight/bSize));
-          vy -= fDensity/(bWeight*2);
 
-          //stop movement of ball
-          if(parseInt((ball.y-ball.radius)+((ball.radius*2)-(ball.radius*2)*(bWeight/bSize/fDensity))) == parseInt(fluid.y)){
-            vy = 0;
-          }
+          //used to slow down fluid accelaration
+          buoy = fDensity/bWeight
+          vy -= ((fDensity)/(bWeight+buoy));
+
+          //stop movement of ball (removed this part because the bounce of the ball shows a bit more realism)
+          // if(parseInt((ball.y-ball.radius)+((ball.radius*2)-(ball.radius*2)*(bWeight/bSize/fDensity))) == parseInt(fluid.y)){
+          //   vy = 0;
+          // }
 
         }
 
@@ -120,13 +125,14 @@ function ballMovement(){
           //bounce the ball
             vy *= -bounce;
           //do this otherwise, ball never stops bouncing
-            if(vy<0 && vy>-2.1)
-                       vy=0;
+            if(vy<0 && vy>-2.1){
+                vy=0;
+            }
 
       }
 
     }
-    else{
+    else{//if drop is False, the ball resets
       ball.radius = bSize*10;
       ball.weight = bWeight;
       fluid.density = fDensity;
